@@ -373,11 +373,12 @@ const AR=[[60,64,67],[57,60,64],[53,57,60],[55,59,62]],BR=[36,33,29,31],MB=[[60,
 const SC=[[60,64,67,71],[57,60,64,67],[53,57,60,64],[55,59,62,65]];function hp(m,t,d,v){n(m,t,d,'triangle',v);n(m+12,t,d*.4,'sine',v*.5)}
 const T3={
 soft:{bpm:72,beats:3,bar:(b,t,s)=>{let k=b%4,c=SC[k];pno(c[0]-24,t,s*3,.08);pno(c[1]-12,t+.03,s*2.5,.05);for(let i=0;i<3;i++)pno(ML[(b*3+i)%12]-12,t+i*s,s*1.9,.11);for(let i=0;i<6;i++)hp(c[i%4]+12+(i>3?12:0),t+i*s/2+.02*i,s*1.6,.055);str(c[1]+12,t,s*3,.022,1700,.45);if(Math.random()<.6)n([96,98,100,103][rr(4)],t+rr(3)*s,.5,'sine',.02)}},
+mbox:{bpm:96,beats:3,bar:(b,t,s)=>{let k=b%4;for(let i=0;i<6;i++)n(MB[k][i%3]+12,t+i*s/2,s*1.2,'triangle',.07);for(let i=0;i<3;i++)n(ML[(b*3+i)%12],t+i*s,s*1.6,'sine',.1);n(MB[k][0]-12,t,s*2.5,'sine',.1)}},
 arcade:{bpm:140,beats:4,bar:(b,t,s)=>{let k=b%4,q=s/4,a=AR[k];for(let i=0;i<16;i++){n(a[i%3]+(i%4==3?12:0),t+i*q,q*.9,'square',.06);if(i%4==0)n(BR[k],t+i*q,q*3.5,'triangle',.25);if(i%2)nz(t+i*q,.03,.04)}}},
 party:{bpm:120,beats:4,bar:(b,t,s)=>{let k=b%4;[0,2].forEach(i=>kick(t+i*s));[1,3].forEach(i=>nz(t+i*s,.12,.12,1500));for(let i=0;i<8;i++){nz(t+i*s/2,.03,.05);n(PB[k]+(i%4==2?12:0),t+i*s/2,s*.4,'sawtooth',.07)}[60,64,67].forEach(m=>n(m+(k==1?-3:0),t,s*.8,'square',.04))}}};
 
 const FAST=['sushi','flap','mole','snake','hoops','bounce','stroop','derby'];
-const trk=()=>{if(S.sd||S.mu)return null;let g=CUR!=null&&G[CUR]?G[CUR][2]:null;return g=='final'?'party':g=='rhythm'?null:g?'arcade':null};
+const trk=()=>{if(S.sd||S.mu)return null;if(document.getElementById('rl')&&S.r>=30)return'mbox';if(document.getElementById('ec')||/What is your name/.test(A.textContent))return'mbox';let g=CUR!=null&&G[CUR]?G[CUR][2]:null;return g=='final'?'party':g=='rhythm'?null:g?'arcade':null};
 function ms(k){if(k===MK)return;MK=k;clearInterval(MT);if(!k){if(MG)MG.gain.value=0;return}if(!MG){MG=AC.createGain();MG.connect(AC.destination)}MG.gain.value=.45;let L=T3[k],s=60/L.bpm,len=s*L.beats;nt=AC.currentTime+.15;bar=0;const tick=()=>{while(nt<AC.currentTime+.4){L.bar(bar++,nt,s);nt+=len}};tick();MT=setInterval(tick,100)}
 window.duck=()=>{if(MG){MG.gain.value=.12;setTimeout(()=>MG.gain.value=.45,2800)}};
 setInterval(()=>{if(!AC||AC.state!='running')return;try{ms(trk())}catch(e){}},250)})();
