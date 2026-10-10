@@ -38,7 +38,7 @@ button.sel{background:linear-gradient(180deg,#ffe08a,#e0b84a);box-shadow:0 3px 0
 .big{text-shadow:0 0 12px rgba(255,194,218,.55)}
 canvas{border-radius:16px;border:3px solid #d8b865;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 14px rgba(255,111,181,.2)}
 input{border-radius:14px;border:2px solid #e0c070;box-shadow:inset 0 2px 5px rgba(0,0,0,.15)}
-#lulu-express,#project_title,.project-name,.page-header,#header_wrap,body>header{display:none!important}</style></head><body>
+#lulu-express,#project_title,.project-name,.page-header,#header_wrap,body>header{display:none!important}#snow{display:none}</style></head><body>
 <h1>💗 The Lulu Express 💗</h1>
 <div id="hd"></div>
 <div id="app"></div>
@@ -80,7 +80,7 @@ function tl(){let l=Math.max(0,LIM-(EL())),m=Math.floor(l/60000),c=Math.floor(l/
 function hd(){$('#hd').innerHTML=`<span>🪙 ${S.t.toLocaleString()}</span>${S.st?`<span id="tm">⏱ ${tl()}</span>`:''}<span>🔐 ${V.map((v,k)=>S.d.includes(v)?CODE[k]:'•').join(' ')}</span><button onclick="tg()" style="padding:4px 10px;margin:0" aria-label="Sound">${S.sd?'🔇':'🔊'}</button><button onclick="vtg()" style="padding:4px 10px;margin:0" aria-label="Voice">${S.vm?'🤐':'🗣️'}</button><button onclick="mtg()" style="padding:4px 10px;margin:0" aria-label="Music">${S.mu?'🔕':'🎵'}</button>`}
 function rst(){clearInterval(TM);dOff();S={t:0,d:[],n:'',m:S.m,sd:S.sd,vm:S.vm,ok:S.ok,tid:S.tid,mu:S.mu,q:S.q,r:S.r};sv();post();welcome()}
 function home(){clearInterval(TM);dOff();hd();snw(1);A.innerHTML=`<p>Hi ${esc(S.n)} 💗 Pick your game</p><div class="grid" id="mp"></div><p><button onclick="rules()">📜 Rules &amp; Prizes</button> <button id="rs" onclick="rst()">Reset</button></p>`;G.forEach((g,i)=>{let lk=i&&!S.d.includes(i-1),b=document.createElement('button');b.className='lv'+(S.d.includes(i)?' ok':'');b.disabled=lk;b.innerHTML=(lk?'🔒':g[1])+'<small>'+(i+1)+'</small>';b.onclick=()=>play(i);$('#mp').append(b)})}
-function snw(v){let z=document.getElementById('snow');if(z)z.style.display=v?'':'none'}
+function snw(v){let z=document.getElementById('snow');if(z)z.style.display=v?'block':'none'}
 function play(i){clearInterval(TM);dOff();hd();snw(0);A.innerHTML=`<div class="card"><button class="back" onclick="home()">←</button><h2>${i+1}. ${G[i][0]}</h2><div id="g"></div></div>`;T[G[i][2]]($('#g'),G[i][3],i)}
 function win(i){clearInterval(TM);dOff();if(!S.d.includes(i)){S.d.push(i);S.t+=G[i][4];sv();post()}hd();let k=V.indexOf(i);$('#g').innerHTML=`<h2>🎉 +${G[i][4].toLocaleString()} tokens!</h2>${k>=0?`<p>🔐 Vault digit ${k+1} unlocked:<br><b class="big">${CODE[k]}</b></p>`:''}<button onclick="home()">Continue ✨</button>`}
 const T={};
@@ -378,9 +378,10 @@ party:{bpm:120,beats:4,bar:(b,t,s)=>{let k=b%4;[0,2].forEach(i=>kick(t+i*s));[1,
 
 const FAST=['sushi','flap','mole','snake','hoops','bounce','stroop','derby'];
 const trk=()=>{if(S.sd||S.mu)return null;let g=CUR!=null&&G[CUR]?G[CUR][2]:null;return g=='final'?'party':g=='rhythm'?null:g?'arcade':null};
-function ms(k){if(k===MK)return;MK=k;clearInterval(MT);if(!k)return;if(!MG){MG=AC.createGain();MG.gain.value=.45;MG.connect(AC.destination)}let L=T3[k],s=60/L.bpm,len=s*L.beats;nt=AC.currentTime+.15;bar=0;const tick=()=>{while(nt<AC.currentTime+.4){L.bar(bar++,nt,s);nt+=len}};tick();MT=setInterval(tick,100)}
+function ms(k){if(k===MK)return;MK=k;clearInterval(MT);if(!k){if(MG)MG.gain.value=0;return}if(!MG){MG=AC.createGain();MG.connect(AC.destination)}MG.gain.value=.45;let L=T3[k],s=60/L.bpm,len=s*L.beats;nt=AC.currentTime+.15;bar=0;const tick=()=>{while(nt<AC.currentTime+.4){L.bar(bar++,nt,s);nt+=len}};tick();MT=setInterval(tick,100)}
 window.duck=()=>{if(MG){MG.gain.value=.12;setTimeout(()=>MG.gain.value=.45,2800)}};
-setInterval(()=>{if(!AC||AC.state!='running')return;try{ms(trk())}catch(e){}},800)})();
+setInterval(()=>{if(!AC||AC.state!='running')return;try{ms(trk())}catch(e){}},250)})();
+new MutationObserver(()=>snw(document.getElementById('mp')?1:0)).observe(A,{childList:true});
 const win0=win;win=function(i){let nw=!S.d.includes(i);win0(i);CUR=null;if(!nw)return;setTimeout(()=>say('pass'),500);S.sk=(S.sk||0)+1;let x='',b=0;if(S.sk>=2){b=Math.min(2500,500*(S.sk-1));S.t+=b;x+=`<p>🔥 Streak x${S.sk}! +${b} bonus tokens</p>`}if(S.sk>=3)x+=bdg('streak');if(Math.random()<.35){let c=[500,1000,1500,2500][R(4)];S.t+=c;S.ch=(S.ch||0)+1;x+=`<p>🎁 Mystery chest! +${c} tokens</p>`;setTimeout(()=>sfx('chest'),500);if(S.ch>=3)x+=bdg('chest')}if(S.d.length>=12){x+=bdg('half');if(EL()<12*60000)x+=bdg('speed')}sv();hd();let bt=document.querySelector('#g button');if(bt)bt.insertAdjacentHTML('beforebegin',x);sfx('ding');confetti(['💗','🪙','✨'])};
 setInterval(()=>{if(!S.st||!S.n)return;let l=LIM-(EL()),h=document.getElementById('hd');if(!h||l<0)return;let p=Math.max(0,l/LIM*100);h.style.background=`linear-gradient(90deg,${l<3e5?'#a8323f':'#6a2f45'} ${p}%,#241519 ${p}%)`;let s=Math.round(l/1000);if(S.fz==null){if(s==300||s==60)sfx('chime');else if(s<=60&&s>0)sfx('tick')}},1000);
 const home0=home;home=function(){home0();CUR=null;let p=S.d.length/23*100,q=(S.pl||0);A.insertAdjacentHTML('afterbegin',`<div style="position:relative;height:34px;margin:4px 0 8px;border-bottom:3px dashed #c9a95a"><span id="trn" style="position:absolute;bottom:-4px;left:calc((100% - 34px)*${q/100});font-size:28px;transition:left 1.2s">🚂</span></div>`);requestAnimationFrame(()=>requestAnimationFrame(()=>{let z=document.getElementById('trn');if(z)z.style.left=`calc((100% - 34px)*${p/100})`;S.pl=p;sv()}));let bp=document.createElement('p');bp.innerHTML=(S.bn?'':'<button onclick="bonus()">⚡ Bonus Round</button> ')+'<button onclick="bdgs()">🏅 Badges</button> <button onclick="qr()">🔁 Quiz reset</button>';A.append(bp)};
