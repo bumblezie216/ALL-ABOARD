@@ -105,7 +105,7 @@ const RULES=`<h2>🏆 Lulu Olympics</h2>
 <p>🎁 <b>Spot prizes:</b> Random HT gifts will be given out throughout the Olympics!</p>
 <h3>📜 Rules</h3>
 <p>👥 <b>Helpers are allowed.</b> You can take part as a helper for a competitor, but the active competitors trying to win must be on the mic.</p>
-<p>🎧 <b>Helpers must stay in the listeners.</b> If you are helping someone, you must stay in the listeners and cannot join the mic.</p>
+<p>🎧 <b>Helpers must stay in the listeners.</b> If you are helping someone, you must stay in the listeners and cannot join the mic.</p><p>👤 <b>One helper per person.</b> Each competitor may have one helper only.</p>
 <p>🚫 <b>No cheating.</b> Any attempt to cheat or gain an unfair advantage may result in disqualification.</p>
 <p>🤫 <b>No answers on mic.</b> Do not discuss, reveal or give away answers while someone is competing.</p>
 <p>🌸 <b>Favourite Flower screenshot.</b> Take a screenshot of your Favourite Flower section, including the flower you drew, as proof that you completed the challenge.</p>
@@ -113,7 +113,7 @@ const RULES=`<h2>🏆 Lulu Olympics</h2>
 <p>⚠️ <b>You can be disqualified.</b> Breaking the rules may result in immediate disqualification from the Lulu Olympics.</p>
 <p>👮 <b>Rule enforcer: Lola.</b> Lola enforces the rules and has the authority to kick and disqualify anyone found cheating or breaking them.</p>
 <p>👩‍⚖️ <b>The judges.</b> The official judges are Rene, Lulu, Lola and Bree. They decide the winner of the final songwriting and singing competition.</p>
-<p>🔐 <b>Vault and time.</b> After the final quiz you must enter the vault code and open the vault to get your boarding pass. Your time stops when the vault opens and is shown on your boarding pass.</p><p>🎁 <b>Prize forfeiture.</b> You may forfeit a prize you win and give it to another competitor of your choice, except for the main prize.</p>
+<p>🎶 <b>Sharing your songs.</b> Anyone who wrote a song during the event is welcome to share it just for fun. Only Platinum Boarding Pass holders, or the top 3 highest-placed finishers, will compete for the main prize with their songs. Everyone else's songs are for the joy of it.</p><p>🔐 <b>Vault and time.</b> After the final quiz you must enter the vault code and open the vault to get your boarding pass. Your time stops when the vault opens and is shown on your boarding pass.</p><p>🎁 <b>Prize forfeiture.</b> You may forfeit a prize you win and give it to another competitor of your choice, except for the main prize.</p>
 <p>🏆 <b>The main prize cannot be forfeited.</b> The 1-month couple tag must stay with the person who wins the final competition and cannot be transferred.</p>
 <p>🔥 Play fair, have fun and may the best competitor win, Lulu! 🔥</p>`;
 function rules(){A.innerHTML='<div class="card" style="text-align:left"><button class="back" onclick="S.n?home():welcome()">←</button>'+RULES+'<button onclick="S.n?home():welcome()">Back</button></div>'}
