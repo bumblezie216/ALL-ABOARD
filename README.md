@@ -38,7 +38,7 @@ button.sel{background:linear-gradient(180deg,#ffe08a,#e0b84a);box-shadow:0 3px 0
 .big{text-shadow:0 0 12px rgba(255,194,218,.55)}
 canvas{border-radius:16px;border:3px solid #d8b865;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 14px rgba(255,111,181,.2)}
 input{border-radius:14px;border:2px solid #e0c070;box-shadow:inset 0 2px 5px rgba(0,0,0,.15)}
-#lulu-express,#project_title,.project-name,.page-header,#header_wrap,body>header{display:none!important}#snow{display:none}</style></head><body>
+#lulu-express,#project_title,.project-name,.page-header,#header_wrap,body>header{display:none!important}#snow{display:none}#hd{position:fixed;top:calc(env(safe-area-inset-top,0px) + 4px);left:8px;right:8px;max-width:464px;margin:0 auto!important;padding:3px 8px;font-size:12px;border-radius:12px;gap:4px;white-space:nowrap;flex-wrap:nowrap;z-index:50;min-height:0}#hd span{font-size:12px}#hd button{padding:1px 6px!important;font-size:13px;line-height:1.3;min-height:0;border-width:1.5px;border-radius:9px;box-shadow:0 2px 0 #6e2d44}body{padding-top:44px}</style></head><body>
 <h1>💗 The Lulu Express 💗</h1>
 <div id="hd"></div>
 <div id="app"></div>
@@ -378,7 +378,7 @@ arcade:{bpm:140,beats:4,bar:(b,t,s)=>{let k=b%4,q=s/4,a=AR[k];for(let i=0;i<16;i
 party:{bpm:120,beats:4,bar:(b,t,s)=>{let k=b%4;[0,2].forEach(i=>kick(t+i*s));[1,3].forEach(i=>nz(t+i*s,.12,.12,1500));for(let i=0;i<8;i++){nz(t+i*s/2,.03,.05);n(PB[k]+(i%4==2?12:0),t+i*s/2,s*.4,'sawtooth',.07)}[60,64,67].forEach(m=>n(m+(k==1?-3:0),t,s*.8,'square',.04))}}};
 
 const FAST=['sushi','flap','mole','snake','hoops','bounce','stroop','derby'];
-const trk=()=>{if(S.sd||S.mu)return null;if(document.getElementById('rl')&&S.r>=30)return'mbox';if(document.getElementById('ec')||/What is your name/.test(A.textContent))return'mbox';let g=CUR!=null&&G[CUR]?G[CUR][2]:null;return g=='final'?'party':g=='rhythm'?null:g?'arcade':null};
+const trk=()=>{if(S.sd||S.mu)return null;if(document.getElementById('rl')&&S.r>=30)return'mbox';if(document.getElementById('ec')||/What is your name/.test(A.textContent))return'mbox';let g=CUR!=null&&G[CUR]?G[CUR][2]:null;return g=='final'?'party':g=='rhythm'||g=='bounce'?null:g?'arcade':null};
 function ms(k){if(k===MK)return;MK=k;clearInterval(MT);if(!k){if(MG)MG.gain.value=0;return}if(!MG){MG=AC.createGain();MG.connect(AC.destination)}MG.gain.value=.45;let L=T3[k],s=60/L.bpm,len=s*L.beats;nt=AC.currentTime+.15;bar=0;const tick=()=>{while(nt<AC.currentTime+.4){L.bar(bar++,nt,s);nt+=len}};tick();MT=setInterval(tick,100)}
 window.duck=()=>{if(MG){MG.gain.value=.12;setTimeout(()=>MG.gain.value=.45,2800)}};
 setInterval(()=>{if(!AC||AC.state!='running')return;try{ms(trk())}catch(e){}},250)})();
